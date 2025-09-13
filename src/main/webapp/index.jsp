@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+인덱스
 <%
-	response.sendRedirect("board/list.jsp");
+	response.sendRedirect("board/List.jsp");
 %>

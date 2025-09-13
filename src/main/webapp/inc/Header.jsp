@@ -21,10 +21,7 @@
 			</td>
 			<td width="70%">
 				<a href="/mysqlboard/board/List.jsp">게시판 목록</a> &nbsp;
-				<a href="/mysqlboard/board/write.jsp">글쓰기</a>
+				<a href="/mysqlboard/board/Write.jsp">글쓰기</a>
 			</td>
 		</tr>
 	</table>
-				
-  </div>
-</nav>
