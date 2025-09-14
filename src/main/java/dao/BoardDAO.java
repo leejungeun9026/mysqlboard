@@ -1,14 +1,24 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import common.MysqlConnPool;
 import dto.BoardDTO;
 
 public class BoardDAO extends MysqlConnPool {
-	public ArrayList<BoardDTO> selectBoard() {
+	public ArrayList<BoardDTO> selectBoard(HashMap<String, String> search) {
 		ArrayList<BoardDTO> list = new ArrayList<>();
-		String sql = "select * from board b left join member m on (b.id = m.id) order by num desc";
+		String sql = "select * from board b left join member m on (b.id = m.id)";
+		if(search.get("searchWord") != null) {
+			if(search.get("searchField").equals("all")) {				
+			   sql += " where title like '%" + search.get("searchWord") + "%'"
+			   		+ " or content like '%" + search.get("searchWord") + "%'";
+			} else {
+			   sql += " where " + search.get("searchField") + " like '%" + search.get("searchWord") + "%'";
+			}
+		}
+			   sql += " order by num desc";
 		try {
 			psmt = con.prepareStatement(sql);
 			rs = psmt.executeQuery();
