@@ -9,11 +9,15 @@ import dto.BoardDTO;
 public class BoardDAO extends MysqlConnPool {
 	public ArrayList<BoardDTO> selectBoard(Map<String, String> search) {
 		ArrayList<BoardDTO> list = new ArrayList<>();
-		String sql = "select * from board b left join member m on (b.id = m.id)";
+		String sql = "select b.*, m.name from board b left join member m on (b.id = m.id)";
 		if(search.get("searchWord") != null) {
 			if(search.get("searchField").equals("all")) {				
 			   sql += " where title like '%" + search.get("searchWord") + "%'"
 			   		+ " or content like '%" + search.get("searchWord") + "%'";
+			} else if(search.get("searchField").equals("userid")) {
+			   sql += " where b.id like '%" + search.get("searchWord") + "%'";
+			} else if(search.get("searchField").equals("username")) {
+			   sql += " where m.name like '%" + search.get("searchWord") + "%'";
 			} else {
 			   sql += " where " + search.get("searchField") + " like '%" + search.get("searchWord") + "%'";
 			}
@@ -90,5 +94,36 @@ public class BoardDAO extends MysqlConnPool {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public int updateBoardDTO(String title, String content, int num) {
+		String sql = "update board set title = ?, content = ? where num = ?";
+		int result = 0;
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, title);
+			psmt.setString(2, content);
+			psmt.setInt(3, num);
+			result = psmt.executeUpdate();
+			close();
+			System.out.println("수정 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int deleteBoardDTO(int num) {
+		String sql = "delete from board where num = ?";
+		int result = 0;
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setInt(1, num);
+			result = psmt.executeUpdate();
+			close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

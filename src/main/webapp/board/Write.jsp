@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:if test="${ empty param.UserId }">
+<c:if test="${ empty UserId }">
 	<% JSFunction.alertLocation("로그인한 회원만 작성 가능합니다.", "List.jsp", out); %>
 </c:if>
 <!DOCTYPE html>

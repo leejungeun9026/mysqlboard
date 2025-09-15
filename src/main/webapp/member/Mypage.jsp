@@ -3,6 +3,7 @@
 <%@page import="common.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%
 	if (session.getAttribute("UserId") == null) {
 		response.sendRedirect("LoginForm.jsp");
@@ -19,7 +20,26 @@
 <body>
 <jsp:include page="/inc/Header.jsp" />
 <h2>마이페이지</h2>
-<form action="MypageUpdate.jsp" method="post">
+<script>
+	function checkPwMatch(){
+		let pass1 = document.getElementById("pass1").value;
+		let pass2 = document.getElementById("pass2").value;
+		let msg = document.getElementById("passMsg");
+		
+		if(pass2.length == 0) {
+			msg.innerHTML = ""; // 비밀번호 확인창이 비어있을 땐 표시 안 함
+      return;
+		}
+		if(pass1 == pass2) {
+			msg.textContent = "비밀번호가 일치합니다.";
+			msg.style.color = "green";
+		} else {
+			msg.textContent = "비밀번호가 일치하지 않습니다.";
+			msg.style.color = "red";
+		}
+	}
+</script>
+<form action="MemberUpdate.jsp" method="post">
 	<table>
 		<tr>
 			<td>아이디</td>
@@ -41,16 +61,21 @@
 		</tr>
 		<tr>
 			<td>변경할 비밀번호</td>
-			<td><input type="password" name="new_pass" value=""></td>
+			<td><input type="password" id="pass1" name="new_pass" value="" onkeyup="checkPwMatch()"></td>
 		</tr>
 		<tr>
 			<td>비밀번호 확인</td>
-			<td><input type="password" name="pass_check" value=""></td>
+			<td>
+				<input type="password" id="pass2" name="new_pass_chk" value="" onkeyup="checkPwMatch()">				
+			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="right">
-				<button type="submit">수정하기</button>
-			</td>
+			<td></td>
+			<td><p id="passMsg" style="margin:0;"></p></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td><button type="submit">수정하기</button></td>
 		</tr>
 	</table>
 </form>

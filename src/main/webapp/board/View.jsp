@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 int num = Integer.parseInt(request.getParameter("num"));
 BoardDAO dao = new BoardDAO();
@@ -28,7 +29,7 @@ BoardDTO board = dao.selectOne(num);
 		</tr>
 		<tr>
 			<td>작성일</td>
-			<td>${ board.num }</td>
+			<td><fmt:formatDate value="${ board.postdate }"  pattern="yyyy-MM-dd hh:mm:ss"/></td>
 			<td>조회수</td>
 			<td>${ board.visitcount }</td>
 		</tr>

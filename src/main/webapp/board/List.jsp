@@ -6,6 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 String searchField = request.getParameter("searchField");
 String searchWord = request.getParameter("searchWord");
@@ -16,6 +17,7 @@ search.put("searchWord", searchWord);
 BoardDAO dao = new BoardDAO();
 ArrayList<BoardDTO> list = dao.selectBoard(search);
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +33,7 @@ ArrayList<BoardDTO> list = dao.selectBoard(search);
 			<td align="center">
 				<form method="get">
 					<select name="searchField">
-						<option value="all"
+						<option value="all" 
 							${ param.searchField eq "all" ? "selected" : "" }>제목+내용</option>
 						<option value="title"
 							${ param.searchField eq "title" ? "selected" : "" }>제목</option>
@@ -39,10 +41,10 @@ ArrayList<BoardDTO> list = dao.selectBoard(search);
 							${ param.searchField eq "content" ? "selected" : "" }>내용</option>
 						<option value="num"
 							${ param.searchField eq "num" ? "selected" : "" }>글번호</option>
-						<option value="b.id"
-							${ param.searchField eq "b.id" ? "selected" : "" }>아이디</option>
-						<option value="m.name"
-							${ param.searchField eq "m.name" ? "selected" : "" }>작성자</option>
+						<option value="userid"
+							${ param.searchField eq "userid" ? "selected" : "" }>아이디</option>
+						<option value="username"
+							${ param.searchField eq "username" ? "selected" : "" }>작성자</option>
 					</select> <input type="text" name="searchWord" value="${ param.searchWord }">
 					<input type="submit" value="검색">
 				</form>
@@ -68,7 +70,7 @@ ArrayList<BoardDTO> list = dao.selectBoard(search);
 				<td>${ board.num }</td>
 				<td><a href="View.jsp?num=${ board.num }">${ board.title }</a></td>
 				<td>${ board.id }(${ board.name })</td>
-				<td>${ board.postdate }</td>
+				<td><fmt:formatDate value="${ board.postdate }"  pattern="yyyy-MM-dd hh:mm:ss"/></td>
 				<td>${ board.visitcount }</td>
 			</tr>
 		</c:forEach>

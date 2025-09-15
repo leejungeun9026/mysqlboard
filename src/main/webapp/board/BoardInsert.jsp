@@ -14,3 +14,4 @@ if (result == 1) {
 } else {
 	JSFunction.alertBack("등록 실패", out);
 }
+%>

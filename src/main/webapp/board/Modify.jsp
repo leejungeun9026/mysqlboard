@@ -27,7 +27,7 @@ BoardDTO board = dao.selectOne(Integer.parseInt(request.getParameter("num")));
 		<table border="1" width="90%">
 			<tr>
 				<td width="10%">번호</td>
-				<td width="40%">${ board.num }</td>
+				<td width="40%">${ board.num } <input type="hidden" name="num" value="${ board.num }"></td>
 				<td width="10%">작성자</td>
 				<td width="40%">${ board.id }(${ board.name })</td>
 			</tr>
@@ -49,7 +49,7 @@ BoardDTO board = dao.selectOne(Integer.parseInt(request.getParameter("num")));
 			</tr>
 			<tr>
 				<td colspan="4" align="center">
-					<button type="submit" onclick="location.href='BoardUpdate.jsp?num=${ board.num }'">작성 완료</button>
+					<button type="submit" onclick="location.href='BoardUpdate.jsp'">작성 완료</button>
 					<button type="reset">다시 작성</button>
 					<button type="button" onclick="location.href='List.jsp'">목록으로</button>
 				</td>

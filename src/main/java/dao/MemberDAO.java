@@ -66,4 +66,24 @@ public class MemberDAO extends MysqlConnPool{
 		}		
 		return member;
 	}
+	
+	public int updatePass(String id, String pass, String nPass1, String nPass2) {
+		int result = 0;
+		if(!nPass1.equals(nPass2)) {
+			System.out.println("변경할 비밀번호 불일치");
+			return result;
+		}
+		String sql = "update member set pass = ? where id = ? and pass = ?";
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, nPass1);
+			psmt.setString(2, id);
+			psmt.setString(3, pass);
+			result = psmt.executeUpdate();
+			System.out.println("비밀번호 변경 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

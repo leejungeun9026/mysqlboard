@@ -8,7 +8,7 @@
 			%> <a href="/mysqlboard/member/LoginForm.jsp">로그인</a> / <a
 			href="/mysqlboard/member/JoinForm.jsp">회원가입</a> <%
  } else {
- %> <%=session.getAttribute("UserName")%>님 <a class="nav-link px-2"
+ %> <a href="/mysqlboard/member/Mypage.jsp">${ UserName }님</a> <a class="nav-link px-2"
 			href="/mysqlboard/member/Logout.jsp">[로그아웃]</a> <%
  }
  %>
