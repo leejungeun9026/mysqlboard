@@ -1,11 +1,11 @@
 <%@page import="common.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	if(session.getAttribute("UserId") == null){
-		JSFunction.alertBack("로그인한 회원만 작성 가능합니다.", out);
-	} else {
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${ empty param.UserId }">
+	<% JSFunction.alertLocation("로그인한 회원만 작성 가능합니다.", "List.jsp", out); %>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,20 +13,23 @@
 <title>회원제 게시판</title>
 </head>
 <body>
-	<jsp:include page="/inc/Header.jsp" /><h2>글쓰기</h2>
+	<jsp:include page="/inc/Header.jsp" />
+	<h2>글쓰기</h2>
 	<form action="BoardInsert.jsp" method="post">
 		<table border="1" width="90%">
 			<tr>
 				<td>제목</td>
-				<td><input type="text" name="title" style="width:90%;"></td>
+				<td><input type="text" name="title" style="width: 90%;"></td>
 			</tr>
 			<tr>
 				<td>작성자</td>
-				<td><input type="text" name="id" value="${UserId}" readonly style="width:90%;"></td>
+				<td><input type="text" name="id" value="${UserId}" readonly
+					style="width: 90%;"></td>
 			</tr>
 			<tr>
 				<td>내용</td>
-				<td><textarea cols="30" rows="10" name="content" style="width:90%;"></textarea></td>
+				<td><textarea cols="30" rows="10" name="content"
+						style="width: 90%;"></textarea></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
@@ -38,6 +41,3 @@
 	</form>
 </body>
 </html>
-<%
-	}
-%>

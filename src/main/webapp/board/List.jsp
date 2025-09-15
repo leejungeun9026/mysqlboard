@@ -1,15 +1,15 @@
+<%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="dto.BoardDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="dao.BoardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String searchField = request.getParameter("searchField");
 String searchWord = request.getParameter("searchWord");
-request.setAttribute("searchWord", searchWord);
-request.setAttribute("searchField", searchField);
-HashMap<String, String> search = new HashMap<String, String>();
+Map<String, String> search = new HashMap<String, String>();
 search.put("searchField", searchField);
 search.put("searchWord", searchWord);
 
@@ -31,11 +31,19 @@ ArrayList<BoardDTO> list = dao.selectBoard(search);
 			<td align="center">
 				<form method="get">
 					<select name="searchField">
-						<option value="all" >제목+내용</option>
-						<option value="title" ${ searchField == "title" ? "selected" : "" } >제목</option>
-						<option value="content" ${ searchField == "content" ? "selected" : "" } >내용</option>
-					</select>
-					<input type="text" name="searchWord" value="${searchWord}">
+						<option value="all"
+							${ param.searchField eq "all" ? "selected" : "" }>제목+내용</option>
+						<option value="title"
+							${ param.searchField eq "title" ? "selected" : "" }>제목</option>
+						<option value="content"
+							${ param.searchField eq "content" ? "selected" : "" }>내용</option>
+						<option value="num"
+							${ param.searchField eq "num" ? "selected" : "" }>글번호</option>
+						<option value="b.id"
+							${ param.searchField eq "b.id" ? "selected" : "" }>아이디</option>
+						<option value="m.name"
+							${ param.searchField eq "m.name" ? "selected" : "" }>작성자</option>
+					</select> <input type="text" name="searchWord" value="${ param.searchWord }">
 					<input type="submit" value="검색">
 				</form>
 			</td>
@@ -49,27 +57,21 @@ ArrayList<BoardDTO> list = dao.selectBoard(search);
 			<th width="20%">날짜</th>
 			<th width="10%">조회수</th>
 		</tr>
-		<%
-		if (list.size() == 0) {
-		%>
-		<tr>
-			<td colspan="5" align="center">게시물이 없습니다.</td>
-		</tr>
-		<%
-		} else {
-		for (BoardDTO b : list) {
-		%>
-		<tr>
-			<td><%=b.getNum()%></td>
-			<td><a href="View.jsp?num=<%=b.getNum()%>"><%=b.getTitle()%></a></td>
-			<td><%=b.getId()%>(<%=b.getName()%>)</td>
-			<td><%=b.getPostdate()%></td>
-			<td><%=b.getVisitcount()%></td>
-		</tr>
-		<%
-		}
-		}
-		%>
+		<c:set var="list" value="<%= list %>" />
+		<c:if test="${ empty list }">
+			<tr>
+				<td colspan="5" align="center">게시물이 없습니다.</td>
+			</tr>
+		</c:if>
+		<c:forEach var="board" items="<%= list %>">
+			<tr>
+				<td>${ board.num }</td>
+				<td><a href="View.jsp?num=${ board.num }">${ board.title }</a></td>
+				<td>${ board.id }(${ board.name })</td>
+				<td>${ board.postdate }</td>
+				<td>${ board.visitcount }</td>
+			</tr>
+		</c:forEach>
 	</table>
 </body>
 </html>

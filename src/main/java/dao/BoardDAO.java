@@ -1,13 +1,13 @@
 package dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 import common.MysqlConnPool;
 import dto.BoardDTO;
 
 public class BoardDAO extends MysqlConnPool {
-	public ArrayList<BoardDTO> selectBoard(HashMap<String, String> search) {
+	public ArrayList<BoardDTO> selectBoard(Map<String, String> search) {
 		ArrayList<BoardDTO> list = new ArrayList<>();
 		String sql = "select * from board b left join member m on (b.id = m.id)";
 		if(search.get("searchWord") != null) {
